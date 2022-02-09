@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "89675460657",
+    "project_id": "pick-go-c9904",
+    "storage_bucket": "pick-go-c9904.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89675460657:android:a45678a4bb5d6527eea510",
+        "android_client_info": {
+          "package_name": "com.example.pickandgo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "89675460657-fisvk6s54l76hpc9oms6oeb2m025iqgi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pickandgo",
+            "certificate_hash": "364b349a966549ca43cf55b03bf88adb0cced2f1"
+          }
+        },
+        {
+          "client_id": "89675460657-u1d7j19740bdtrthlckt8j9pt91u8mls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiGobJEO6SsJyTbfQp8q9CZQV_WVj_cxo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "89675460657-u1d7j19740bdtrthlckt8j9pt91u8mls.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
