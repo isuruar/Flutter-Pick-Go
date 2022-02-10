@@ -121,9 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      height: 200,
+                      height: 100,
                       child: Text(
-                        "Pick-Go",
+                        "Pick&GO",
                         style: TextStyle(
                           color: Color(0xffF5591F),
                           fontWeight: FontWeight.bold,
