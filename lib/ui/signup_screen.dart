@@ -26,6 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final emailEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
   final confirmPasswordEditingController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     //first name Field
