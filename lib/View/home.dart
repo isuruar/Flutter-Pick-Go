@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pickandgo/View/pick_requests.dart';
+import 'package:pickandgo/ui/login_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -13,7 +15,7 @@ class _HomeState extends State<Home> {
     textStyle: const TextStyle(
       fontSize: 22,
     ),
-    fixedSize: const Size(280, 80),
+    fixedSize: const Size(250, 80),
     primary: Colors.orange.shade700,
   );
 
@@ -54,19 +56,12 @@ class _HomeState extends State<Home> {
                     fontSize: 18,
                     color: Colors.deepOrange),
               ),
-              // onTap: () {
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) {
-              //         return ();
-              //       },
-              //     ),
-              //   );
-              //
-              //   // Update the state of the app.
-              //   // ...
-              // },
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PickRequests()),
+                ); //
+              },
             ),
             ListTile(
               leading: Icon(
@@ -124,9 +119,23 @@ class _HomeState extends State<Home> {
         ),
       ),
       appBar: AppBar(
-        title: Text("Pick&GO"),
+        title: Text("Home"),
         centerTitle: true,
         backgroundColor: Colors.orange.shade700,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
+              ); // do something
+            },
+          )
+        ],
       ),
       body: ListView(
         padding: EdgeInsets.all(24),
@@ -140,14 +149,14 @@ class _HomeState extends State<Home> {
           ElevatedButton(
             style: style,
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) {
-              //       return BodyStretchingSchedule1();
-              //     },
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return PickRequests();
+                  },
+                ),
+              );
             },
             child: const Text('Pick Requests'),
           ),

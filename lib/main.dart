@@ -2,7 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pickandgo/ui/login_screen.dart';
 import 'package:pickandgo/ui/signup_screen.dart';
+
 import 'View/home.dart';
+import 'View/pick_requests.dart';
 import 'View/splash_screen.dart';
 
 Future<void> main() async {
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
         'login': (context) => LoginScreen(),
         'signup': (context) => SignUpScreen(),
         'home': (context) => Home(),
+        'pickrequests': (context) => PickRequests(),
       },
     );
   }

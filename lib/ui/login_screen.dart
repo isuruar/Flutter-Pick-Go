@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pickandgo/View/home.dart';
 import 'package:pickandgo/ui/home_screen.dart';
 import 'package:pickandgo/ui/signup_screen.dart';
 
@@ -177,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
           .then((uid) => {
                 Fluttertoast.showToast(msg: "Login Successful"),
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomeScreen())),
+                    MaterialPageRoute(builder: (context) => Home())),
               })
           .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);

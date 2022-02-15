@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pickandgo/View/home.dart';
 import 'package:pickandgo/model/user_model.dart';
 import 'package:pickandgo/ui/home_screen.dart';
 
@@ -244,9 +245,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           signUp(emailEditingController.text, passwordEditingController.text);
         },
         child: Text(
-          "SignUp",
+          "Register",
           textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
         ),
       ),
     );
@@ -268,7 +270,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Container(
             color: Colors.white,
             child: Padding(
-              padding: const EdgeInsets.all(36.0),
+              padding: const EdgeInsets.all(25.0),
               child: Form(
                 key: _fromKey,
                 child: Column(
@@ -276,9 +278,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      height: 100,
+                      height: 50,
                       child: Text(
-                        "Register Now",
+                        "Register",
                         style: TextStyle(
                             color: Color(0xffF5591F),
                             fontSize: 40,
@@ -344,9 +346,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Succesfully registered");
 
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-        (route) => false);
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => Home()), (route) => false);
   }
 }
