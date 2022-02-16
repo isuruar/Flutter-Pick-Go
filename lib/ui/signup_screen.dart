@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pickandgo/View/home.dart';
 import 'package:pickandgo/model/user_model.dart';
-import 'package:pickandgo/ui/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);

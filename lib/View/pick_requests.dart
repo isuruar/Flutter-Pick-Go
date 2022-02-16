@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:pickandgo/model/pick_requests_model.dart';
-import 'package:pickandgo/ui/home_screen.dart';
+import 'package:pickandgo/model/user_model.dart';
 
 import 'home.dart';
 
@@ -706,7 +706,7 @@ class _PickRequestsState extends State<PickRequests> {
 
     PickRequestsModel pickRequestsModel = PickRequestsModel();
 
-    pickRequestsModel.orderID = orderID;
+    pickRequestsModel.orderID = user!.orderID;
     pickRequestsModel.firstNameSender = firstNameSenderEditingController.text;
     pickRequestsModel.lastNameSender = lastNameSenderEditingController.text;
     pickRequestsModel.addressSender = addressSenderEditingController.text;
