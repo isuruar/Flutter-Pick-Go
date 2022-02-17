@@ -146,24 +146,39 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
 
   //post details function
   postDetailsToFirestore() async {
+    try {
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      User? user = _auth.currentUser;
+
+      ConfirmOrderModel confirmOrderModel = ConfirmOrderModel();
+
+      confirmOrderModel.orderID = orderIDEditingController.text;
+      confirmOrderModel.status = "Delivered";
+      confirmOrderModel.time = DateTime.now();
+
+      await firebaseFirestore
+          .collection("confirmed_orders")
+          .doc(user!.uid)
+          .set(confirmOrderModel.toMap());
+      Fluttertoast.showToast(msg: "Order confirmation successful");
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (route) => false);
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Something went wrong!");
+      print(e);
+    }
+  }
+
+  //update order status
+  updateStatus() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
-
     ConfirmOrderModel confirmOrderModel = ConfirmOrderModel();
-
-    confirmOrderModel.orderID = orderIDEditingController.text;
-    confirmOrderModel.status = "Delivered";
-    confirmOrderModel.time = DateTime.now();
-
     await firebaseFirestore
-        .collection("confirmed_orders")
-        .doc(user!.uid)
-        .set(confirmOrderModel.toMap());
-    Fluttertoast.showToast(msg: "Order confirmation successful");
-
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-        (route) => false);
+        .collection('orders')
+        .doc(confirmOrderModel.orderID)
+        .update({'status': "Delivered"});
   }
 }
