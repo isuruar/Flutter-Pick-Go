@@ -101,7 +101,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      height: 100,
+                      height: 80,
                       child: Text(
                         "Confirm Order Here",
                         style: TextStyle(
@@ -111,8 +111,6 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                       ),
                     ),
                     SizedBox(height: 45),
-                    orderIDField,
-                    SizedBox(height: 20),
                     Text(
                       "Please upload a picture of your parcel here",
                       style:
@@ -130,6 +128,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                                   builder: (context) => ImageUpload()));
                         },
                         child: Text("Upload")),
+                    SizedBox(height: 20),
+                    orderIDField,
                     SizedBox(height: 20),
                     confirmButton,
                   ],
@@ -154,7 +154,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   //}
   //}
 
-  //post details function
+  //order confirmation function
   postDetailsToFirestore() async {
     try {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
