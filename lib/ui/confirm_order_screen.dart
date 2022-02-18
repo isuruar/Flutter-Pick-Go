@@ -113,7 +113,16 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     SizedBox(height: 45),
                     orderIDField,
                     SizedBox(height: 20),
+                    Text(
+                      "Please upload a picture of your parcel here",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
                     ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Color(0xffF5591F)),
+                        ),
                         onPressed: () {
                           Navigator.push(
                               context,

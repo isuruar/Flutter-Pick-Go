@@ -43,14 +43,14 @@ class _ImageUploadState extends State<ImageUpload> {
     Reference ref = FirebaseStorage.instance.ref().child("images");
     await ref.putFile(_image!);
     downloadURL = await ref.getDownloadURL();
+    showSnacBar("Image uploaded successfully", Duration(seconds: 3));
     print(downloadURL);
 
-    await firebaseFirestore
-        .collection("confirmed_orders")
-        .doc(uid)
-        .collection("images")
-        .add({'imageURL': downloadURL}).whenComplete(() =>
-            showSnacBar("Image uploaded successfully", Duration(seconds: 3)));
+    //await firebaseFirestore
+    //.collection("confirmed_orders")
+    //.doc(uid)
+    //.collection("images")
+    //.add({'imageURL': downloadURL}).whenComplete(() =>
   }
 
   // snackbar to show errors
@@ -62,7 +62,10 @@ class _ImageUploadState extends State<ImageUpload> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Image Upload")),
+      appBar: AppBar(
+        title: const Text("Image Upload"),
+        backgroundColor: Color(0xffF5591F),
+      ),
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(8),
@@ -93,11 +96,19 @@ class _ImageUploadState extends State<ImageUpload> {
                                 : Image.file(_image!),
                           ),
                           ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color(0xffF5591F)),
+                              ),
                               onPressed: () {
                                 imagePickerMethod();
                               },
                               child: Text("Select image")),
                           ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color(0xffF5591F)),
+                              ),
                               onPressed: () {
                                 if (_image != null) {
                                   uploadImage();
