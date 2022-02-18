@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pickandgo/View/home.dart';
 import 'package:pickandgo/model/confirm_order_model.dart';
-import 'package:pickandgo/model/user_model.dart';
 import 'package:pickandgo/ui/image_upload_screen.dart';
 
 import 'home_screen.dart';
@@ -19,7 +19,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   //form key
   final _fromKey = GlobalKey<FormState>();
   //editing controller
-  final orderIDEditingController = new TextEditingController();
+  final orderIDEditingController = TextEditingController();
 
   var Fluttertoast;
 
@@ -31,7 +31,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
       controller: orderIDEditingController,
       keyboardType: TextInputType.text,
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{5,}$');
+        RegExp regex = RegExp(r'^.{5,}$');
         if (value!.isEmpty) {
           return ("Please check order ID");
         }
@@ -45,7 +45,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.confirmation_number,
             color: Color(0xffF5591F),
           ),
@@ -60,14 +60,14 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     final confirmButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Color(0xffF5591F),
+      color: const Color(0xffF5591F),
       child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           postDetailsToFirestore();
         },
-        child: Text(
+        child: const Text(
           "Confirm",
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -78,14 +78,28 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.orange.shade700,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Color(0xffF5591F)),
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xffffffff)),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.home,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Home()),
+              ); // do something
+            },
+          )
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -99,7 +113,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
+                    const SizedBox(
                       height: 100,
                       child: Text(
                         "Confirm Order Here",
@@ -109,9 +123,9 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 45),
+                    const SizedBox(height: 45),
                     orderIDField,
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -119,8 +133,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                               MaterialPageRoute(
                                   builder: (context) => ImageUpload()));
                         },
-                        child: Text("Upload")),
-                    SizedBox(height: 20),
+                        child: const Text("Upload")),
+                    const SizedBox(height: 20),
                     confirmButton,
                   ],
                 ),

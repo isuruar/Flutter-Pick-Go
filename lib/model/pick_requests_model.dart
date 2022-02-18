@@ -17,7 +17,7 @@ class PickRequestsModel {
   String? status;
 
   PickRequestsModel(
-      {this.orderID,
+      {this.orderID = '',
       this.firstNameSender,
       this.lastNameSender,
       this.addressSender,

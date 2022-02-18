@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pickandgo/View/home.dart';
 import 'package:pickandgo/ui/confirm_order.dart';
 
 class ImageUpload extends StatefulWidget {
@@ -62,7 +63,17 @@ class _ImageUploadState extends State<ImageUpload> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Image Upload")),
+      appBar: AppBar(
+        backgroundColor: Colors.orange.shade700,
+        elevation: 0,
+        title: Text('Upload Image'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xffffffff)),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(8),

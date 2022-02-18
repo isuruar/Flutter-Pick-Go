@@ -35,7 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       controller: firstNameEditingController,
       keyboardType: TextInputType.name,
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{5,}$');
+        RegExp regex = RegExp(r'^.{5,}$');
         if (value!.isEmpty) {
           return ("Please enter your first name");
         }
@@ -49,11 +49,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.person,
             color: Color(0xffF5591F),
           ),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "First Name",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -76,11 +76,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.person,
             color: Color(0xffF5591F),
           ),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Last Name",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -92,12 +92,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       autofocus: false,
       controller: contactNoEditingController,
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{10,}$');
+        RegExp regex = new RegExp(
+            r'/^(?:0|94|\+94)?(?:(11|21|23|24|25|26|27|31|32|33|34|35|36|37|38|41|45|47|51|52|54|55|57|63|65|66|67|81|912)(0|2|3|4|5|7|9)|7(0|1|2|4|5|6|7|8)\d)\d{6}$/;');
         if (value!.isEmpty) {
           return ("Please enter your contact number");
         }
         if (!regex.hasMatch(value)) {
-          return ("Please enter a valid number");
+          return ("Please enter a valid number!");
         }
       },
       onSaved: (value) {
@@ -105,11 +106,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.phone,
             color: Color(0xffF5591F),
           ),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Contact No",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -132,11 +133,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.home,
             color: Color(0xffF5591F),
           ),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Address",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -163,7 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.mail,
             color: Color(0xffF5591F),
           ),
@@ -185,7 +186,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return ("Please enter your password");
         }
         if (!regex.hasMatch(value)) {
-          return ("Password need minimum 6 characters");
+          return ("Password need a minimum of 6 characters");
         }
       },
       onSaved: (value) {
@@ -193,7 +194,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.vpn_key,
             color: Color(0xffF5591F),
           ),
@@ -212,7 +213,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       validator: (value) {
         if (confirmPasswordEditingController.text !=
             passwordEditingController.text) {
-          return ("Password don't match");
+          return ("Passwords don't match!");
         }
         return null;
       },
@@ -236,14 +237,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final signUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Color(0xffF5591F),
+      color: const Color(0xffF5591F),
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           signUp(emailEditingController.text, passwordEditingController.text);
         },
-        child: Text(
+        child: const Text(
           "Register",
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -300,7 +301,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     passwordField,
                     SizedBox(height: 20),
                     confirmPasswordField,
-                    SizedBox(height: 20),
+                    SizedBox(height: 30),
                     signUpButton,
                     SizedBox(height: 15)
                   ],
@@ -343,9 +344,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         .collection("users")
         .doc(user.uid)
         .set(userModel.toMap());
-    Fluttertoast.showToast(msg: "Succesfully registered");
+    Fluttertoast.showToast(msg: "Successfully registered");
 
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => Home()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Home()),
+        (route) => false);
   }
 }

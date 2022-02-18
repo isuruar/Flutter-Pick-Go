@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pickandgo/View/pick_requests.dart';
+import 'package:pickandgo/ui/confirm_order.dart';
 import 'package:pickandgo/ui/login_screen.dart';
 
 class Home extends StatefulWidget {
@@ -13,7 +14,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final ButtonStyle style = ElevatedButton.styleFrom(
     textStyle: const TextStyle(
-      fontSize: 22,
+      fontSize: 20,
     ),
     fixedSize: const Size(250, 80),
     primary: Colors.orange.shade700,
@@ -27,22 +28,16 @@ class _HomeState extends State<Home> {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-            // const DrawerHeader(
-            //   decoration: BoxDecoration(
-            //       color: Colors.white,
-            //       image: const DecorationImage(
-            //           image: AssetImage('images/menuimage.jpg'),
-            //           fit: BoxFit.cover)),
-            //   child: Text(
-            //     'Pick&GO',
-            //     style: TextStyle(
-            //         fontWeight: FontWeight.bold,
-            //         fontSize: 18,
-            //         color: Colors.black),
-            //   ),
-            // ),
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  image: const DecorationImage(
+                      image: AssetImage('images/menuimage.png'),
+                      fit: BoxFit.cover)),
+              child: null,
+            ),
             SizedBox(
-              height: 50,
+              height: 10,
             ),
             ListTile(
               leading: Icon(
@@ -101,19 +96,19 @@ class _HomeState extends State<Home> {
                     fontSize: 18,
                     color: Colors.deepOrange),
               ),
-              // onTap: () {
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) {
-              //         return FullbodySchedule();
-              //       },
-              //     ),
-              //   );
-              //
-              //   // Update the state of the app.
-              //   // ...
-              // },
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ConfirmOrder();
+                    },
+                  ),
+                );
+
+                // Update the state of the app.
+                // ...
+              },
             ),
           ],
         ),
@@ -183,14 +178,14 @@ class _HomeState extends State<Home> {
           ElevatedButton(
             style: style,
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) {
-              //       return BodyStretchingSchedule1();
-              //     },
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ConfirmOrder();
+                  },
+                ),
+              );
             },
             child: const Text('Received Items'),
           ),

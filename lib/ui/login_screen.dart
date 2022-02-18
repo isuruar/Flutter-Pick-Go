@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("Don't have an account?"),
+                        Text("Don't have an account? "),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -151,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     builder: (context) => SignUpScreen()));
                           },
                           child: Text(
-                            " SignUp",
+                            "Register",
                             style: TextStyle(
                                 color: Color(0xffF5591F),
                                 fontSize: 15,

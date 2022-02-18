@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:pickandgo/model/pick_requests_model.dart';
 import 'package:pickandgo/model/user_model.dart';
 
+import 'delivery_charges.dart';
 import 'home.dart';
 
 class PickRequests extends StatefulWidget {
@@ -54,10 +55,9 @@ class _PickRequestsState extends State<PickRequests> {
 
   DateTime? dateTime;
 
-  // DateTime selectedDate = DateTime.now();
-  // TimeOfDay selectedTime = TimeOfDay.now();
-
   String? get orderID => null;
+
+  String? get id => null;
 
   String getText() {
     if (dateTime == null) {
@@ -68,8 +68,10 @@ class _PickRequestsState extends State<PickRequests> {
   }
 
   final _auth = FirebaseAuth.instance;
+
   //form key
   final _fromKey = GlobalKey<FormState>();
+
   //sender details
   final firstNameSenderEditingController = TextEditingController();
   final lastNameSenderEditingController = TextEditingController();
@@ -89,6 +91,15 @@ class _PickRequestsState extends State<PickRequests> {
 
   final statusEditingController = TextEditingController();
 
+  // void validateForm() {
+  //   final form = _fromKey.currentState;
+  //   if (form.validate()) {
+  //     print("Form is valid");
+  //   } else {
+  //     print("Form is invalid");
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     //sender first name field
@@ -98,7 +109,7 @@ class _PickRequestsState extends State<PickRequests> {
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Please enter your first name");
+          return ("Please enter sender's first name");
         }
         return null;
       },
@@ -125,7 +136,7 @@ class _PickRequestsState extends State<PickRequests> {
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Please enter your last name");
+          return ("Please enter sender's last name");
         }
         return null;
       },
@@ -152,7 +163,7 @@ class _PickRequestsState extends State<PickRequests> {
       keyboardType: TextInputType.streetAddress,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Please enter your address");
+          return ("Please enter sender's address");
         }
         return null;
       },
@@ -201,16 +212,19 @@ class _PickRequestsState extends State<PickRequests> {
       ),
     );
 
-    //contact no field
+    //sender contact no field
     final contactNoField = TextFormField(
       autofocus: false,
       controller: contactNoSenderEditingController,
       keyboardType: TextInputType.phone,
       validator: (value) {
+        RegExp regex = new RegExp(r'^.{10,}$');
         if (value!.isEmpty) {
-          return ("Please enter your contact no");
+          return ("Please enter sender's contact no");
         }
-        return null;
+        if (!regex.hasMatch(value)) {
+          return ("Please enter a valid number!");
+        }
       },
       onSaved: (value) {
         contactNoSenderEditingController.text = value!;
@@ -421,7 +435,7 @@ class _PickRequestsState extends State<PickRequests> {
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Please enter your first name");
+          return ("Please enter receiver's first name");
         }
         return null;
       },
@@ -448,7 +462,7 @@ class _PickRequestsState extends State<PickRequests> {
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Please enter your first name");
+          return ("Please enter receiver's last name");
         }
         return null;
       },
@@ -475,7 +489,7 @@ class _PickRequestsState extends State<PickRequests> {
       keyboardType: TextInputType.streetAddress,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Please enter your address");
+          return ("Please enter receiver's address");
         }
         return null;
       },
@@ -495,14 +509,14 @@ class _PickRequestsState extends State<PickRequests> {
           )),
     );
 
-    //contact no receiverfield
+    //contact no receiver field
     final contactNoReceiverField = TextFormField(
       autofocus: false,
       controller: contactNoReceiverEditingController,
       keyboardType: TextInputType.phone,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Please enter your contact no");
+          return ("Please enter receiver's contact no");
         }
         return null;
       },
@@ -529,16 +543,20 @@ class _PickRequestsState extends State<PickRequests> {
             borderRadius: new BorderRadius.circular(12.0),
           ),
           primary: const Color(0xffF5591F),
-          padding: const EdgeInsets.symmetric(horizontal: 140, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 10),
           textStyle:
-              const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
       onPressed: () {
-        // Map<String, dynamic> data = {
-        //   "field1": firstNameSenderEditingController.text,
-        //   "field2": lastNameSenderEditingController.text,
-        //   "field": lastNameSenderEditingController.text,
-        // };
-        postDetailsToFirestore();
+        if (_fromKey.currentState!.validate()) {
+          try {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Processing Data')),
+            );
+            postDetailsToFirestore();
+          } catch (e) {
+            print("Error: $e");
+          }
+        }
       },
       child: const Text('Submit'),
     );
@@ -551,7 +569,10 @@ class _PickRequestsState extends State<PickRequests> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xffffffff)),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const PickRequests()),
+            );
           },
         ),
         actions: <Widget>[
@@ -706,7 +727,7 @@ class _PickRequestsState extends State<PickRequests> {
 
     PickRequestsModel pickRequestsModel = PickRequestsModel();
 
-    pickRequestsModel.orderID = user!.orderID;
+    pickRequestsModel.orderID = orderID;
     pickRequestsModel.firstNameSender = firstNameSenderEditingController.text;
     pickRequestsModel.lastNameSender = lastNameSenderEditingController.text;
     pickRequestsModel.addressSender = addressSenderEditingController.text;
@@ -728,11 +749,14 @@ class _PickRequestsState extends State<PickRequests> {
 
     await firebaseFirestore
         .collection("orders")
-        .doc(pickRequestsModel.orderID)
+        .doc()
         .set(pickRequestsModel.toMap());
+
     Fluttertoast.showToast(msg: "Successfully placed pick request");
 
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => Home()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const DeliveryCharges()),
+        (route) => false);
   }
 }
