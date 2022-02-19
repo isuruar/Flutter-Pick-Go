@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pickandgo/View/home.dart';
 import 'package:pickandgo/model/confirm_order_model.dart';
+import 'package:pickandgo/model/user_model.dart';
 import 'package:pickandgo/ui/image_upload_screen.dart';
 
 import 'home_screen.dart';
@@ -19,7 +19,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   //form key
   final _fromKey = GlobalKey<FormState>();
   //editing controller
-  final orderIDEditingController = TextEditingController();
+  final orderIDEditingController = new TextEditingController();
 
   var Fluttertoast;
 
@@ -31,7 +31,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
       controller: orderIDEditingController,
       keyboardType: TextInputType.text,
       validator: (value) {
-        RegExp regex = RegExp(r'^.{5,}$');
+        RegExp regex = new RegExp(r'^.{5,}$');
         if (value!.isEmpty) {
           return ("Please check order ID");
         }
@@ -45,7 +45,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.confirmation_number,
             color: Color(0xffF5591F),
           ),
@@ -60,14 +60,15 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     final confirmButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: const Color(0xffF5591F),
+      color: Color(0xffF5591F),
       child: MaterialButton(
-        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           postDetailsToFirestore();
+          updateStatus();
         },
-        child: const Text(
+        child: Text(
           "Confirm",
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -78,28 +79,14 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.orange.shade700,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xffffffff)),
+          icon: Icon(Icons.arrow_back_ios, color: Color(0xffF5591F)),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.home,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Home()),
-              ); // do something
-            },
-          )
-        ],
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -113,8 +100,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    const SizedBox(
-                      height: 100,
+                    SizedBox(
+                      height: 80,
                       child: Text(
                         "Confirm Order Here",
                         style: TextStyle(
@@ -123,18 +110,27 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    const SizedBox(height: 45),
-                    orderIDField,
-                    const SizedBox(height: 20),
+                    SizedBox(height: 45),
+                    Text(
+                      "Please upload a picture of your parcel here",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
                     ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Color(0xffF5591F)),
+                        ),
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ImageUpload()));
                         },
-                        child: const Text("Upload")),
-                    const SizedBox(height: 20),
+                        child: Text("Upload")),
+                    SizedBox(height: 20),
+                    orderIDField,
+                    SizedBox(height: 20),
                     confirmButton,
                   ],
                 ),
@@ -158,26 +154,41 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   //}
   //}
 
-  //post details function
+  //order confirmation function
   postDetailsToFirestore() async {
+    try {
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      User? user = _auth.currentUser;
+
+      ConfirmOrderModel confirmOrderModel = ConfirmOrderModel();
+
+      confirmOrderModel.orderID = orderIDEditingController.text;
+      confirmOrderModel.status = "Delivered";
+      confirmOrderModel.time = DateTime.now();
+
+      await firebaseFirestore
+          .collection("confirmed_orders")
+          .doc(user!.uid)
+          .set(confirmOrderModel.toMap());
+      Fluttertoast.showToast(msg: "Order confirmation successful");
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (route) => false);
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Something went wrong!");
+      print(e);
+    }
+  }
+
+  //update order status
+  updateStatus() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
-
     ConfirmOrderModel confirmOrderModel = ConfirmOrderModel();
-
-    confirmOrderModel.orderID = orderIDEditingController.text;
-    confirmOrderModel.status = "Delivered";
-    confirmOrderModel.time = DateTime.now();
-
     await firebaseFirestore
-        .collection("confirmed_orders")
-        .doc(user!.uid)
-        .set(confirmOrderModel.toMap());
-    Fluttertoast.showToast(msg: "Order confirmation successful");
-
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-        (route) => false);
+        .collection('orders')
+        .doc(confirmOrderModel.orderID)
+        .update({'status': "Delivered"});
   }
 }

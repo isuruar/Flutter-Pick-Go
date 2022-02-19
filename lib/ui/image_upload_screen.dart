@@ -6,8 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pickandgo/View/home.dart';
-import 'package:pickandgo/ui/confirm_order.dart';
+import 'package:pickandgo/ui/confirm_order_screen.dart';
 
 class ImageUpload extends StatefulWidget {
   const ImageUpload({Key? key}) : super(key: key);
@@ -41,7 +40,7 @@ class _ImageUploadState extends State<ImageUpload> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    Reference ref = FirebaseStorage.instance.ref().child("images");
+    Reference ref = FirebaseStorage.instance.ref().child("${uid}/images");
     await ref.putFile(_image!);
     downloadURL = await ref.getDownloadURL();
     print(downloadURL);
@@ -64,15 +63,8 @@ class _ImageUploadState extends State<ImageUpload> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange.shade700,
-        elevation: 0,
-        title: Text('Upload Image'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xffffffff)),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
+        title: const Text("Image Upload"),
+        backgroundColor: Color(0xffF5591F),
       ),
       body: Center(
         child: Padding(
@@ -104,11 +96,19 @@ class _ImageUploadState extends State<ImageUpload> {
                                 : Image.file(_image!),
                           ),
                           ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color(0xffF5591F)),
+                              ),
                               onPressed: () {
                                 imagePickerMethod();
                               },
                               child: Text("Select image")),
                           ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color(0xffF5591F)),
+                              ),
                               onPressed: () {
                                 if (_image != null) {
                                   uploadImage();
