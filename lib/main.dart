@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pick&GO',
-      initialRoute: 'receiveditems',
+      initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
         'login': (context) => LoginScreen(),
