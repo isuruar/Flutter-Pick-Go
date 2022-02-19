@@ -65,8 +65,10 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
-          postDetailsToFirestore();
-          updateStatus();
+          if (_fromKey.currentState!.validate()) {
+            postDetailsToFirestore();
+            updateStatus();
+          }
         },
         child: Text(
           "Confirm",
