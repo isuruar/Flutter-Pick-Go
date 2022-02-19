@@ -218,12 +218,12 @@ class _PickRequestsState extends State<PickRequests> {
       controller: contactNoSenderEditingController,
       keyboardType: TextInputType.phone,
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{10,}$');
+        RegExp regex = new RegExp(r'^.{10,10}$');
         if (value!.isEmpty) {
           return ("Please enter sender's contact no");
         }
         if (!regex.hasMatch(value)) {
-          return ("Please enter a valid number!");
+          return ("Please enter a number with 10 characters!");
         }
       },
       onSaved: (value) {

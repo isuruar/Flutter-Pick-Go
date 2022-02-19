@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pickandgo/View/pick_requests.dart';
-import 'package:pickandgo/ui/confirm_order.dart';
+import 'package:pickandgo/ui/confirm_order_screen.dart';
 import 'package:pickandgo/ui/login_screen.dart';
 
 class Home extends StatefulWidget {

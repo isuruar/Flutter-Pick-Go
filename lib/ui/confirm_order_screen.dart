@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pickandgo/View/home.dart';
 import 'package:pickandgo/model/confirm_order_model.dart';
 import 'package:pickandgo/model/user_model.dart';
 import 'package:pickandgo/ui/image_upload_screen.dart';
-
-import 'home_screen.dart';
 
 class ConfirmOrder extends StatefulWidget {
   const ConfirmOrder({Key? key}) : super(key: key);
@@ -79,14 +78,31 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.orange.shade700,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Color(0xffF5591F)),
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xffffffff)),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Home()),
+            );
           },
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.home,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Home()),
+              ); // do something
+            },
+          )
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -106,7 +122,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                         "Confirm Order Here",
                         style: TextStyle(
                             color: Color(0xffF5591F),
-                            fontSize: 40,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -172,10 +188,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           .set(confirmOrderModel.toMap());
       Fluttertoast.showToast(msg: "Order confirmation successful");
 
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-          (route) => false);
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) => Home()), (route) => false);
     } catch (e) {
       Fluttertoast.showToast(msg: "Something went wrong!");
       print(e);

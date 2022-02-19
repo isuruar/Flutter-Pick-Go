@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pickandgo/ui/confirm_order.dart';
+import 'package:pickandgo/ui/confirm_order_screen.dart';
 import 'package:pickandgo/ui/image_upload_screen.dart';
 import 'package:pickandgo/ui/login_screen.dart';
 import 'package:pickandgo/ui/signup_screen.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pick&GO',
-      initialRoute: 'signup',
+      initialRoute: 'receiveditems',
       routes: {
         '/': (context) => SplashScreen(),
         'login': (context) => LoginScreen(),
