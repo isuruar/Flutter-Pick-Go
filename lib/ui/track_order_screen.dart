@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pickandgo/View/home.dart';
 
 class TrackOrder extends StatefulWidget {
   const TrackOrder({Key? key}) : super(key: key);
@@ -69,14 +70,31 @@ class _TrackOrderState extends State<TrackOrder> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.orange.shade700,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Color(0xffF5591F)),
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xffffffff)),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Home()),
+            );
           },
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.home,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Home()),
+              ); // do something
+            },
+          )
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -96,11 +114,11 @@ class _TrackOrderState extends State<TrackOrder> {
                         "Track your parcel here",
                         style: TextStyle(
                             color: Color(0xffF5591F),
-                            fontSize: 40,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 45),
+                    SizedBox(height: 40),
                     Text(
                       "Please enter the tracking code",
                       style:

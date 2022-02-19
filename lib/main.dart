@@ -4,6 +4,7 @@ import 'package:pickandgo/ui/confirm_order_screen.dart';
 import 'package:pickandgo/ui/image_upload_screen.dart';
 import 'package:pickandgo/ui/login_screen.dart';
 import 'package:pickandgo/ui/signup_screen.dart';
+import 'package:pickandgo/ui/track_order_screen.dart';
 
 import 'View/delivery_charges.dart';
 import 'View/home.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pick&GO',
-      initialRoute: '/',
+      initialRoute: 'receiveditems',
       routes: {
         '/': (context) => SplashScreen(),
         'login': (context) => LoginScreen(),
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         'home': (context) => Home(),
         'pickrequests': (context) => PickRequests(),
         'deliverycharges': (context) => DeliveryCharges(),
+        'trackorder': (context) => TrackOrder(),
         'receiveditems': (context) => ConfirmOrder(),
         'imageupload': (context) => ImageUpload(),
       },

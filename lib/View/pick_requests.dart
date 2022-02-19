@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:pickandgo/model/pick_requests_model.dart';
-import 'package:pickandgo/model/user_model.dart';
 
 import 'delivery_charges.dart';
 import 'home.dart';
@@ -218,7 +217,7 @@ class _PickRequestsState extends State<PickRequests> {
       controller: contactNoSenderEditingController,
       keyboardType: TextInputType.phone,
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{10,10}$');
+        RegExp regex = RegExp(r'^.{10,10}$');
         if (value!.isEmpty) {
           return ("Please enter sender's contact no");
         }
@@ -539,8 +538,8 @@ class _PickRequestsState extends State<PickRequests> {
     //submit button
     final submitButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-          shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(12.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
           ),
           primary: const Color(0xffF5591F),
           padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 10),

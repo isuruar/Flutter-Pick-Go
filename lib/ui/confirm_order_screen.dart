@@ -190,8 +190,10 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           .set(confirmOrderModel.toMap());
       Fluttertoast.showToast(msg: "Order confirmation successful");
 
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => Home()), (route) => false);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const Home()),
+          (route) => false);
     } catch (e) {
       Fluttertoast.showToast(msg: "Something went wrong!");
       print(e);

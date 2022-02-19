@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pickandgo/View/pick_requests.dart';
 import 'package:pickandgo/ui/confirm_order_screen.dart';
 import 'package:pickandgo/ui/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pickandgo/ui/track_order_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -37,16 +37,16 @@ class _HomeState extends State<Home> {
             const DrawerHeader(
               decoration: BoxDecoration(
                   color: Colors.white,
-                  image: const DecorationImage(
+                  image: DecorationImage(
                       image: AssetImage('images/menuimage.png'),
                       fit: BoxFit.cover)),
               child: null,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.article,
                 color: Colors.deepOrange,
               ),
@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.add_location_alt,
                 color: Colors.deepOrange,
               ),
@@ -76,22 +76,22 @@ class _HomeState extends State<Home> {
                     fontSize: 18,
                     color: Colors.deepOrange),
               ),
-              // onTap: () {
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) {
-              //         return PilateSchedule();
-              //       },
-              //     ),
-              //   );
-              //
-              //   // Update the state of the app.
-              //   // ...
-              // },
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const TrackOrder();
+                    },
+                  ),
+                );
+
+                // Update the state of the app.
+                // ...
+              },
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.markunread_mailbox_rounded,
                 color: Colors.deepOrange,
               ),
@@ -107,7 +107,7 @@ class _HomeState extends State<Home> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return ConfirmOrder();
+                      return const ConfirmOrder();
                     },
                   ),
                 );
@@ -120,7 +120,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       appBar: AppBar(
-        title: Text("Home"),
+        title: const Text("Home"),
         centerTitle: true,
         backgroundColor: Colors.orange.shade700,
         actions: <Widget>[
@@ -131,23 +131,17 @@ class _HomeState extends State<Home> {
             ),
             onPressed: () {
               logOut();
-              // await _auth.signOut();
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const LoginScreen()),
-              // );
-              // do something
             },
           )
         ],
       ),
       body: ListView(
-        padding: EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
         children: [
-          Image(
+          const Image(
               image: NetworkImage(
                   'https://images.unsplash.com/photo-1607227063002-677dc5fdf96f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80')),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           ElevatedButton(
@@ -157,14 +151,14 @@ class _HomeState extends State<Home> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return PickRequests();
+                    return const PickRequests();
                   },
                 ),
               );
             },
             child: const Text('Pick Requests'),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           ElevatedButton(
@@ -181,7 +175,7 @@ class _HomeState extends State<Home> {
             },
             child: const Text('Track'),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           ElevatedButton(
@@ -191,7 +185,7 @@ class _HomeState extends State<Home> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return ConfirmOrder();
+                    return const ConfirmOrder();
                   },
                 ),
               );
