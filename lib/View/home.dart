@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pickandgo/View/pick_requests.dart';
 import 'package:pickandgo/ui/confirm_order_screen.dart';
 import 'package:pickandgo/ui/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,6 +14,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _auth = FirebaseAuth.instance;
+
   final ButtonStyle style = ElevatedButton.styleFrom(
     textStyle: const TextStyle(
       fontSize: 20,
@@ -124,10 +130,13 @@ class _HomeState extends State<Home> {
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()),
-              ); // do something
+              logOut();
+              // await _auth.signOut();
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const LoginScreen()),
+              // );
+              // do something
             },
           )
         ],
@@ -192,5 +201,21 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
+  }
+
+  //logout function
+  Future logOut() async {
+    return await _auth
+        .signOut()
+        .then((uid) => {
+              Fluttertoast.showToast(msg: "Logout Successful"),
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const LoginScreen())),
+            })
+        .catchError((e) {
+      Fluttertoast.showToast(msg: e!.message);
+
+      // return null;
+    });
   }
 }
