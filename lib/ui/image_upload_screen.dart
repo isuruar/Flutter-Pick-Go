@@ -40,17 +40,17 @@ class _ImageUploadState extends State<ImageUpload> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    Reference ref = FirebaseStorage.instance.ref().child("images");
+    Reference ref = FirebaseStorage.instance.ref().child("${uid}/images");
     await ref.putFile(_image!);
     downloadURL = await ref.getDownloadURL();
-    showSnacBar("Image uploaded successfully", Duration(seconds: 3));
     print(downloadURL);
 
-    //await firebaseFirestore
-    //.collection("confirmed_orders")
-    //.doc(uid)
-    //.collection("images")
-    //.add({'imageURL': downloadURL}).whenComplete(() =>
+    await firebaseFirestore
+        .collection("confirmed_orders")
+        .doc(uid)
+        .collection("images")
+        .add({'imageURL': downloadURL}).whenComplete(() =>
+            showSnacBar("Image uploaded successfully", Duration(seconds: 3)));
   }
 
   // snackbar to show errors
