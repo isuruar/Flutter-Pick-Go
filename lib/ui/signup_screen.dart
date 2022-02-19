@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pickandgo/View/home.dart';
 import 'package:pickandgo/model/user_model.dart';
+import 'package:pickandgo/ui/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -26,7 +26,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final emailEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
   final confirmPasswordEditingController = new TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     //first name Field
@@ -35,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       controller: firstNameEditingController,
       keyboardType: TextInputType.name,
       validator: (value) {
-        RegExp regex = RegExp(r'^.{5,}$');
+        RegExp regex = new RegExp(r'^.{5,}$');
         if (value!.isEmpty) {
           return ("Please enter your first name");
         }
@@ -49,11 +48,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.person,
             color: Color(0xffF5591F),
           ),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "First Name",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -76,11 +75,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.person,
             color: Color(0xffF5591F),
           ),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Last Name",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -90,15 +89,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     //contact num  Field
     final contactNoField = TextFormField(
       autofocus: false,
-      keyboardType: TextInputType.phone,
       controller: contactNoEditingController,
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{10,10}$');
+        RegExp regex = new RegExp(r'^.{10,}$');
         if (value!.isEmpty) {
           return ("Please enter your contact number");
         }
         if (!regex.hasMatch(value)) {
-          return ("Please enter a valid number!");
+          return ("Please enter a valid number");
         }
       },
       onSaved: (value) {
@@ -106,11 +104,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.phone,
             color: Color(0xffF5591F),
           ),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Contact No",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -133,11 +131,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.home,
             color: Color(0xffF5591F),
           ),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Address",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -164,7 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.mail,
             color: Color(0xffF5591F),
           ),
@@ -186,7 +184,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return ("Please enter your password");
         }
         if (!regex.hasMatch(value)) {
-          return ("Password need a minimum of 6 characters");
+          return ("Password need minimum 6 characters");
         }
       },
       onSaved: (value) {
@@ -194,7 +192,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.vpn_key,
             color: Color(0xffF5591F),
           ),
@@ -213,7 +211,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       validator: (value) {
         if (confirmPasswordEditingController.text !=
             passwordEditingController.text) {
-          return ("Passwords don't match!");
+          return ("Password don't match");
         }
         return null;
       },
@@ -237,18 +235,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final signUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: const Color(0xffF5591F),
+      color: Color(0xffF5591F),
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           signUp(emailEditingController.text, passwordEditingController.text);
         },
-        child: const Text(
-          "Register",
+        child: Text(
+          "SignUp",
           textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -270,7 +267,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Container(
             color: Colors.white,
             child: Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: const EdgeInsets.all(36.0),
               child: Form(
                 key: _fromKey,
                 child: Column(
@@ -278,9 +275,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      height: 50,
+                      height: 100,
                       child: Text(
-                        "Register",
+                        "Register Now",
                         style: TextStyle(
                             color: Color(0xffF5591F),
                             fontSize: 40,
@@ -301,7 +298,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     passwordField,
                     SizedBox(height: 20),
                     confirmPasswordField,
-                    SizedBox(height: 30),
+                    SizedBox(height: 20),
                     signUpButton,
                     SizedBox(height: 15)
                   ],
@@ -344,11 +341,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         .collection("users")
         .doc(user.uid)
         .set(userModel.toMap());
-    Fluttertoast.showToast(msg: "Successfully registered");
+    Fluttertoast.showToast(msg: "Succesfully registered");
 
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const Home()),
+        MaterialPageRoute(builder: (context) => HomeScreen()),
         (route) => false);
   }
 }
