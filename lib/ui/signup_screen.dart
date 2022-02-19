@@ -90,6 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     //contact num  Field
     final contactNoField = TextFormField(
       autofocus: false,
+      keyboardType: TextInputType.phone,
       controller: contactNoEditingController,
       validator: (value) {
         RegExp regex = new RegExp(r'^.{10,10}$');
