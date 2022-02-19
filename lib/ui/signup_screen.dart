@@ -1,11 +1,9 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pickandgo/View/home.dart';
 import 'package:pickandgo/model/user_model.dart';
-import 'package:pickandgo/ui/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -89,9 +87,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     //contact num  Field
     final contactNoField = TextFormField(
       autofocus: false,
+      keyboardType: TextInputType.phone,
       controller: contactNoEditingController,
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{10,}$');
+        RegExp regex = new RegExp(r'^.{10,10}$');
         if (value!.isEmpty) {
           return ("Please enter your contact number");
         }
@@ -343,9 +342,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Succesfully registered");
 
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-        (route) => false);
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => Home()), (route) => false);
   }
 }
