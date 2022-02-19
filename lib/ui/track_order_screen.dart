@@ -17,6 +17,25 @@ class _TrackOrderState extends State<TrackOrder> {
   final orderIDEditingController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
+    // track button
+    final trackButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: Color(0xffF5591F),
+      child: MaterialButton(
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () {
+          if (_fromKey.currentState!.validate()) {}
+        },
+        child: Text(
+          "Track order",
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+
     // orderID filed
     final orderIDField = TextFormField(
       autofocus: false,
@@ -25,7 +44,7 @@ class _TrackOrderState extends State<TrackOrder> {
       validator: (value) {
         RegExp regex = new RegExp(r'^.{5,}$');
         if (value!.isEmpty) {
-          return ("Please check order ID");
+          return ("Please check your tracking code");
         }
         if (!regex.hasMatch(value)) {
           return (" ");
@@ -47,8 +66,57 @@ class _TrackOrderState extends State<TrackOrder> {
             borderRadius: BorderRadius.circular(10),
           )),
     );
-    return Container();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: Color(0xffF5591F)),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(36.0),
+              child: Form(
+                key: _fromKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 80,
+                      child: Text(
+                        "Track your parcel here",
+                        style: TextStyle(
+                            color: Color(0xffF5591F),
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    SizedBox(height: 45),
+                    Text(
+                      "Please enter the tracking code",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 20),
+                    orderIDField,
+                    SizedBox(height: 20),
+                    trackButton,
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
-
-  loadOrderStatus() async {}
 }
