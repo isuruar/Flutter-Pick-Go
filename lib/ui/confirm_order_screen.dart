@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pickandgo/model/confirm_order_model.dart';
 import 'package:pickandgo/model/user_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pickandgo/ui/image_upload_screen.dart';
 
 import 'home_screen.dart';
@@ -20,8 +21,6 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   final _fromKey = GlobalKey<FormState>();
   //editing controller
   final orderIDEditingController = new TextEditingController();
-
-  var Fluttertoast;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +67,11 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           if (_fromKey.currentState!.validate()) {
             postDetailsToFirestore();
             updateStatus();
+
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+                (route) => false);
           }
         },
         child: Text(
@@ -172,12 +176,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           .collection("confirmed_orders")
           .doc(user!.uid)
           .set(confirmOrderModel.toMap());
-      Fluttertoast.showToast(msg: "Order confirmation successful");
-
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-          (route) => false);
+      Fluttertoast.showToast(msg: "Order marked as completed");
     } catch (e) {
       Fluttertoast.showToast(msg: "Something went wrong!");
       print(e);

@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pickandgo/model/user_model.dart';
-import 'package:pickandgo/ui/confirm_order_screen.dart';
 import 'package:pickandgo/ui/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
